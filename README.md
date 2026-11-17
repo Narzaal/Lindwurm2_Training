@@ -2,6 +2,10 @@
 
 Simulateur d’entraînement aux mécaniques de The Lindwurm (M12S phase 2).
 
+**[▶ Lancer le simulateur en ligne](https://lindwurm2-training.narzaal.workers.dev/)**
+
+Accessible directement dans le navigateur, sans installation.
+
 Sources importées depuis [Pull Lab sur Sites](https://clone-zone-m12s.narzaal.chatgpt.site), commit source `e6e44baecc4b66e16875768ae206c5053c13ce90`.
 
 ## Structure
