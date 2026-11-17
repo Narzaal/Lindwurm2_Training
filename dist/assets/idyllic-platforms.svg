@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1" y2="0.3"><stop stop-color="#17202d"/><stop offset=".48" stop-color="#202734"/><stop offset="1" stop-color="#405574"/></linearGradient>
+    <radialGradient id="light"><stop stop-color="#a4bded" stop-opacity=".23"/><stop offset="1" stop-color="#789de2" stop-opacity="0"/></radialGradient>
+    <pattern id="tiles" width="128" height="128" patternUnits="userSpaceOnUse" patternTransform="rotate(45 500 500)">
+      <rect width="128" height="128" fill="none" stroke="#8797bd" stroke-opacity=".16" stroke-width="2"/>
+      <rect x="3" y="3" width="122" height="122" fill="none" stroke="#080e1b" stroke-opacity=".4"/>
+      <path d="M0 64H128M64 0V128" stroke="#b5b9d5" stroke-opacity=".07"/>
+      <path d="M0 14H33V35H56V17H89V44H112V14H128M0 90H19V113H47V82H72V104H103V75H128M12 0V32H28V59H7V78M128 58H97V69H79V50H65V66H43V56H28" fill="none" stroke="#91b6d6" stroke-opacity=".21" stroke-width="2.3"/>
+      <path d="M0 19H29V40H59V22H84V48H117V19H128M0 95H14V118H51V87H68V109H108V80H128" fill="none" stroke="#83c7bc" stroke-opacity=".13" stroke-width="4"/>
+      <path d="M42 0V14H60V2M64 128V118H87V128M128 110H120V128M0 46H12V64" fill="none" stroke="#b19bce" stroke-opacity=".24" stroke-width="3"/>
+    </pattern>
+    <pattern id="circuits" width="260" height="212" patternUnits="userSpaceOnUse" patternTransform="rotate(45 500 500)">
+      <path d="M0 18H70V56H94V35H125V83H164V48H218V8H260M0 171H36V141H75V180H105V150H148V200H195V170H260M29 0V28H17V74H54V106H82V118H105M234 212V126H208V97H182V124H152V99H123" fill="none" stroke="#a9bad9" stroke-opacity=".22" stroke-width="3"/>
+      <path d="M0 25H64V63H101V42H118V90H171V55H225V15H260M0 177H43V148H68V187H112V157H141V207H202V177H260" fill="none" stroke="#88cfc4" stroke-opacity=".14" stroke-width="5"/>
+    </pattern>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".65" numOctaves="3" seed="42"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".11"/></feComponentTransfer><feBlend in="SourceGraphic" mode="soft-light"/></filter>
+  </defs>
+  <rect width="1000" height="1000" fill="url(#base)"/>
+  <path d="M120 500L225 395L330 500L225 605ZM670 500L775 395L880 500L775 605Z" fill="#7d95ca" fill-opacity=".16"/>
+  <rect width="1000" height="1000" fill="url(#tiles)"/>
+  <rect width="1000" height="1000" fill="url(#circuits)"/>
+  <ellipse cx="870" cy="440" rx="300" ry="320" fill="url(#light)"/>
+  <ellipse cx="110" cy="540" rx="250" ry="260" fill="url(#light)" opacity=".4"/>
+  <rect width="1000" height="1000" opacity=".45" filter="url(#grain)" fill="transparent"/>
+</svg>
