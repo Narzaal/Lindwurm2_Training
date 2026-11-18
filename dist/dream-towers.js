@@ -120,7 +120,7 @@ function drawDreamTowerLesson(){
  const c=dreamLinkLesson,s=c.step,elapsed=c.elapsed%13,pulse=1+Math.sin(c.elapsed*4)*.08;
  const split=s===1||s===2||elapsed>=10;
  if(split)drawDreamPlatforms();else {drawDreamArenaFloor(true);drawDreamGroupHalves(false);}
- drawWaymarks(DS,true);dragon(0,0,55,true);
+ drawWaymarks(DS);dragon(0,0,55,true);
  for(const side of [-1,1]){const x=side*14*DS;circle(x,0,10*DS-8,null,(side<0?1:2)===c.group?'#9ffff0':'#6f8497',3);text('GROUPE '+(side<0?1:2),x,-255,20,(side<0?1:2)===c.group?'#b5ffe9':'#9eacba','700');}
  if(s>0)for(const t of c.towers){
   circle(t.x,t.y,3*DS,'#bee8ff08','#b0c9db',1.5);drawDreamMeteor(t,75,.72);

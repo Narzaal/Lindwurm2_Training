@@ -56,7 +56,7 @@ function renderDreamElementLesson(){
 }
 function drawDreamElementLesson(){
  const c=dreamLinkLesson,s=c.step,t=c.elapsed%15;
- drawDreamPlatforms();dragon(0,0,55,true);
+ drawDreamPlatforms();drawWaymarks(DS);dragon(0,0,55,true);
  const positions=Object.fromEntries(roles.map(r=>[r,dreamElementFrame(c,r,t)]));
  for(const tower of c.towers){
   if(s===0){circle(tower.x,tower.y,3*DS,'#bee8ff08',DREAM_ELEMENTS[tower.type].color,2);drawDreamMeteor(tower,75,.65);}

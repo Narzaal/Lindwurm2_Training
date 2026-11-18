@@ -62,10 +62,10 @@ function encounterTick(dt){
  if(old<99.1&&time>=99.1){setupActors();decisions=freshDecisions()}
  if(history.length===0||time-history.at(-1).t>.06)record();if(time>=duration())finish();updateUI();
 }
-function drawWaymarks(scale,islands=false){
+function drawWaymarks(scale){
  const palette=['#df6977','#df6977','#e5c85e','#e5c85e','#73c9dc','#73c9dc','#aa83e4','#aa83e4'];
  const unit=scale/DS;
- for(let i=0;i<8;i++){if(islands&&(i===0||i===4))continue;const p=pt(i*TAU/8,(i%2?Math.SQRT2*6.825:13.65)*scale),c=palette[i];
+ for(let i=0;i<8;i++){const p=pt(i*TAU/8,(i%2?Math.SQRT2*6.825:13.65)*scale),c=palette[i];
   if(i%2){ctx.fillStyle=c+'35';ctx.strokeStyle=c;ctx.lineWidth=1.4;ctx.fillRect(p.x-20*unit,p.y-20*unit,40*unit,40*unit);ctx.strokeRect(p.x-20*unit,p.y-20*unit,40*unit,40*unit)}else circle(p.x,p.y,21*unit,c+'35',c,1.4);
   text(marks[i],p.x,p.y,21*unit,c,'700');
  }

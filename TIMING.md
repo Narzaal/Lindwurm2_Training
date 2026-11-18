@@ -261,3 +261,16 @@ Walking input now stops at the safe floor edge (20 yalms, with only a 0.01 simul
 Added a persistent, timestamped personal result journal below playback and a fixed-height latest-result line below the arena. All distinct errors affecting the selected role are retained, including multiple errors in one mechanic. Checkpoint duplicates are collapsed; successful resolutions display a green check. Cast announcements and setup/inversion events are not labelled as successful resolutions. The journal persists across exercise modules, filters future entries while seeking backwards, trims future results when branching replay and clears on restart. No future positioning instructions are added.
 
 Validation: circular and island boundary constraints, unchanged geometry, wind-jump exemption, keyboard movement against the wall, multi-error logging, success feedback, cross-module persistence, replay filtering/branching and reset. Full eight-role demonstration and Idyllic regression retained. Browser visual QA remains unavailable due to the previously diagnosed managed preview limitation.
+
+### Idyllic Dream clone positions from FFLogs
+
+At the first completed self-casts, Snaking Kick (46353) is at world (100, 104.5). The two Power Gusher clones (46351 and 46352) occupy (100, 88) and (100, 112) in either orientation. Arena center is (100, 100), and increasing Z points south. These readings use the casting clone’s own coordinates. All ten pulls below agree. In the five ranked clears, the same Snaking Kick instance also retains that position for its first visual (46357) and the departure of its island jump (46297).
+
+| Report | Fights |
+| --- | --- |
+| [PcyCvGAFRqzrXJBj](https://www.fflogs.com/reports/PcyCvGAFRqzrXJBj#fight=30&type=replay) | 25, 26, 28, 30, 34 |
+| [8AraVqC7GFwkmzLf](https://www.fflogs.com/reports/8AraVqC7GFwkmzLf#fight=14&type=replay) | 14 |
+| [mgAnZqbryGJXFKcw](https://www.fflogs.com/reports/mgAnZqbryGJXFKcw#fight=14&type=replay) | 14 |
+| [3b6CKFVhPZANngyH](https://www.fflogs.com/reports/3b6CKFVhPZANngyH#fight=7&type=replay) | 7 |
+| [2gn8H6WabrxK3AB1](https://www.fflogs.com/reports/2gn8H6WabrxK3AB1#fight=15&type=replay) | 15 |
+| [LXapYDv3NzxRVPbf](https://www.fflogs.com/reports/LXapYDv3NzxRVPbf#fight=21&type=replay) | 21 |

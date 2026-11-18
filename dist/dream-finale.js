@@ -47,13 +47,13 @@ function drawDreamFinaleLesson(){
  const c=dreamLinkLesson,s=c.step,t=c.elapsed%16,vertical=c.scenario.verticalNorth!==c.scenario.absorbedNorth;
  const split=s===1||s===3&&t>=dreamFinaleSplitAt(c);
  if(split)drawDreamPlatforms();else drawDreamArenaFloor(s===0||s===3);
- if(!split)drawWaymarks(DS);dragon(0,0,55,true);
+ drawWaymarks(DS);dragon(0,0,55,true);
  if(s===0){for(const wave of [1,2])for(const p of dreamFinaleClones(c,wave)){dragon(p.x,p.y,32);icon(p.type,p.x,p.y+45,20);text(wave===1?'1er':'2e',p.x,p.y-42,18,wave===1?'#a6ffe3':'#eacfa8','700');}}
  if(s===1){
-  const absorbed=dp(0,c.scenario.absorbedNorth?-14:14),start=dp(0,c.scenario.absorbedNorth?14:-14),end=dp(c.scenario.coneEast?14:-14,0),f=Math.min(1,Math.max(0,(t-3)/1.1));
+  const absorbed=dp(0,c.scenario.absorbedNorth?DREAM_CLONE_Z.north:DREAM_CLONE_Z.south),start=dp(0,c.scenario.absorbedNorth?DREAM_CLONE_Z.south:DREAM_CLONE_Z.north),end=dp(c.scenario.coneEast?14:-14,0),f=Math.min(1,Math.max(0,(t-3)/1.1));
   circle(absorbed.x,absorbed.y,36,'#060912','#b399ec',3);text('PORTAIL',absorbed.x,absorbed.y-45,15,'#d5b7ff','700');dragon(absorbed.x,absorbed.y,32);
   const p={x:start.x+(end.x-start.x)*f,y:start.y+(end.y-start.y)*f};dragon(p.x,p.y,38);text(vertical?'↕':'↔',p.x,p.y+45,30,'#ffe6bd');
-  const orb=dp(-end.x/DS,0);dragon(orb.x*f,0,36);circle(orb.x*f,0,28,null,'#ffe6bd',3);
+  const orb=dp(-end.x/DS*f,DREAM_CLONE_Z.kick*(1-f));dragon(orb.x,orb.y,36);circle(orb.x,orb.y,28,null,'#ffe6bd',3);
  }
  if(s===2||s===4&&t<9){const wave=s===2?1:2;for(const clone of dreamFinaleClones(c,wave)){dragon(clone.x,clone.y,32);icon(clone.type,clone.x,clone.y-40,22);if(clone.type==='defam')circle(clone.x,clone.y,20*DS,'#ed293918','#ff8e99',2);else circle(clone.x,clone.y,5*DS,'#85e7d222','#85e7d2',2);}}
  if(s===3&&split){const p=dp(c.scenario.coneEast?14:-14,0);dragon(p.x,p.y,38);for(const axis of [vertical?0:Math.PI/2,vertical?Math.PI:Math.PI*1.5])drawSector(p,axis,Math.PI/4,16*DS,'#ed293930');circle(-p.x,0,10*DS,'#ed293930','#ff8e99',2);}

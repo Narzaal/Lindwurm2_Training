@@ -73,7 +73,7 @@ function drawDreamDemoLesson(){
 function drawDreamTowerDemo(c,t){
  const returning=t>=16,split=t>=4&&t<16||t>=20;
  if(split)drawDreamPlatforms();else {drawDreamArenaFloor(true);drawDreamGroupHalves(false);}
- if(!split)drawWaymarks(DS);dragon(0,0,55,true);
+ drawWaymarks(DS);dragon(0,0,55,true);
  if(t>=4)for(const tower of c.towers){circle(tower.x,tower.y,3*DS,'#bee8ff08',DREAM_ELEMENTS[tower.type].color,2);drawDreamMeteor(tower,75,.65);}
  if(t>=3&&t<16)drawDreamLessonArcanum(c,t-2,Object.fromEntries(roles.map(role=>[role,t<7?dreamLessonMove(dp((roles.indexOf(role)%4-1.5)*1.1,4+Math.floor(roles.indexOf(role)/4)),c.towers[dreamPreTower(role)],t-1-(role===c.role?0:.25)):dreamLessonMove(c.towers[dreamPreTower(role)],dreamElementTower(c,role),t-7-(role===c.role?0:.25))])));
  for(const [i,role] of roles.entries()){

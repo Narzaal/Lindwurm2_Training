@@ -1,6 +1,7 @@
 'use strict';
 // Idyllic Dream: BossMod cast sequence; Caro Uptime NW/NE / Splatoon verified preset.
 const DREAM={entry:5,clone:16.6,blue1:26.4,memory:32.5,red1:45,links:51.2,lock:70.6,blue2:70.7,stored:75.1,islands1:83.2,tellTowers:85.4,arcanum:92.8,red2:100.8,pair0:106,pair1:111,pair2:116,pair3:121,blue3:130.1,islands2:131.4,towers:134.5,earth:140.2,baits:145.2,portal:153.6,jump:157,red3:167.5,replay1:176,blue4:181.5,islands3:182.8,safe:186,red4:190.3,replay2:196.9,storedFinal:201.7,raid:207.7,end:210};
+const DREAM_CLONE_Z = Object.freeze({ north: -12, kick: 4.5, south: 12 });
 const DREAM_FIRE_DURATION=5;
 const DS=19.5, DREAM_PICKUPS=[['defam',0],['stack',0],['stack',1],['defam',1],['defam',2],['stack',2],['stack',3],['defam',3]];
 const DREAM_ELEMENTS={fire:{name:'FEU',symbol:'FEU',color:'#ff8a3d'},earth:{name:'TERRE',symbol:'◇',color:'#c6ba9b'},dark:{name:'Ténèbres',symbol:'✺',color:'#c09aff'},wind:{name:'Vent',symbol:'≋',color:'#9adfa7'}};
@@ -63,7 +64,7 @@ function dreamStep(){const t=dreamTime();const rows=[
  ['identify',DREAM.blue1,'Staging · ton clone','Repère ton clone grâce au lien personnel. Son repère détermine le lien à prendre.'],
  ['memory',DREAM.red1,'Replication · trois clones','Mémorise le côté nord ou sud avec les cônes nord/sud : ce sera le côté sûr au retour.'],
  ['links',DREAM.blue2,'Replication · liens Caro','Depuis A, compte chaque symbole dans le sens horaire : A/2/C/4 prennent les défams 1/2/3/4 ; 1/B/3/D les stacks 1/2/3/4.'],
- ['stored',DREAM.stored+.15,'Attaques mémorisées','Rejoins le côté mémorisé, hors du cercle central et entre les deux cônes.'],
+ ['stored',DREAM.stored+.15,'Attaques mémorisées','Rejoins le côté mémorisé, hors du cercle décalé au sud et entre les deux cônes.'],
  ['platforms',DREAM.tellTowers,'Lindwurm’s Meteor · deux îlots','Avant la séparation : groupe 1 à gauche (MT/H1/M1/R1), groupe 2 à droite (OT/H2/M2/R2). Rejoins ta position de tour.'],
  ['spread',DREAM.arcanum+.15,'Arcadian Arcanum · écartez-vous','Reste sur ta position de départ. Les quatre supports ou les quatre DPS reçoivent la vulnérabilité lumière.'],
  ['readTowers',DREAM.red2,'Downfall · mémorise ta tour','Vulnérabilité lumière : feu ou terre. Sans vulnérabilité : vent ou ténèbres. Échange nord/sud avec ton partenaire de même distance au boss si nécessaire.'],
@@ -88,7 +89,7 @@ function dreamTarget(role){const step=dreamStep().id,i=roles.indexOf(role),loose
  if(step==='start'){const p=actor(role);return{x:p.x,y:p.y,r:24};}
  if(step==='identify'||step==='memory')return dreamCloneWaitingPos(dreamClock(role));
  if(step==='links')return dreamTime()<DREAM.links?dreamCloneWaitingPos(dreamClock(role)):{...dreamSource(role),r:16};
- if(step==='stored')return dp(dreamWest(role)?-10:10,dreamScenario.verticalNorth?-10:10,1);
+ if(step==='stored')return dp(dreamWest(role)?-12:12,dreamScenario.verticalNorth?-8:8,1);
  if(step==='platforms'||step==='spread')return {...dreamTowerPositions()[dreamPreTower(role)],r:16};
  if(step==='readTowers'||step==='returnTowers')return dreamTowerTarget(role);
  if(step.startsWith('pair')){const n=Number(step.slice(4)),pair=dreamPair(n),src=dream.sources.find(s=>s.owner===role),defam=dream.sources[pair[0]].type==='defam',group=dreamGroup(role),side=group?1:-1;
@@ -107,7 +108,7 @@ function dreamCheck(key,label,fn){const before=dream.failures.length;fn();const 
 function dreamConeHit(p,c,axis,half=Math.PI/4){const a=Math.atan2(p.x-c.x,-(p.y-c.y));return Math.abs(Math.atan2(Math.sin(a-axis),Math.cos(a-axis)))<half}
 function dreamDoubleConeHit(p,c,vertical){return dreamConeHit(p,c,vertical?0:Math.PI/2)||dreamConeHit(p,c,vertical?Math.PI:Math.PI*1.5)}
 function dreamConeEffect(c,vertical){dream.effects.push({type:'double',...c,vertical,at:time})}
-function dreamStoredHit(final=false){for(const r of roles){const p=actor(r);let hit;if(final){const c=dp(0,-7.5);hit=dreamDoubleConeHit(p,c,dreamScenario.verticalNorth===dreamScenario.absorbedNorth)}else hit=dist(p,dp(0,0))<10*DS||dreamDoubleConeHit(p,dp(0,-14),dreamScenario.verticalNorth)||dreamDoubleConeHit(p,dp(0,14),!dreamScenario.verticalNorth);if(hit)dreamError([r],'Attaque mémorisée : mauvaise zone sûre.')}if(final)dreamConeEffect(dp(0,-7.5),dreamScenario.verticalNorth===dreamScenario.absorbedNorth);else{dreamConeEffect(dp(0,-14),dreamScenario.verticalNorth);dreamConeEffect(dp(0,14),!dreamScenario.verticalNorth);dream.effects.push({type:'circle',...dp(0,0,10),at:time})}}
+function dreamStoredHit(final=false){for(const r of roles){const p=actor(r);let hit;if(final){const c=dp(0,-7.5);hit=dreamDoubleConeHit(p,c,dreamScenario.verticalNorth===dreamScenario.absorbedNorth)}else hit=dist(p,dp(0,DREAM_CLONE_Z.kick))<10*DS||dreamDoubleConeHit(p,dp(0,DREAM_CLONE_Z.north),dreamScenario.verticalNorth)||dreamDoubleConeHit(p,dp(0,DREAM_CLONE_Z.south),!dreamScenario.verticalNorth);if(hit)dreamError([r],'Attaque mémorisée : mauvaise zone sûre.')}if(final)dreamConeEffect(dp(0,-7.5),dreamScenario.verticalNorth===dreamScenario.absorbedNorth);else{dreamConeEffect(dp(0,DREAM_CLONE_Z.north),dreamScenario.verticalNorth);dreamConeEffect(dp(0,DREAM_CLONE_Z.south),!dreamScenario.verticalNorth);dream.effects.push({type:'circle',...dp(0,DREAM_CLONE_Z.kick,10),at:time})}}
 function dreamResolvePair(n){
  for(const id of dreamPair(n)){
   const s=dream.sources[id];if(!s.owner){dreamError(roles,'Lien non attribué.');continue;}
@@ -289,7 +290,7 @@ function drawDream(){const t=dreamTime(),blue=dreamBlue(),islands=dreamIslands()
   else drawDreamArenaFloor(blue);
   circle(0,0,20*DS,null,'#d49eba',2);
  }
- drawWaymarks(DS,islands);
+ drawWaymarks(DS);
  if(!islands)drawDeathRing(DS);
  if(islands)text('DEUX PLATEFORMES',0,-414,12,'#c9d5df','700');
  else if(t>=DREAM.entry)text(blue?'RÉALITÉ BLEUE':'RÉALITÉ ROUGE',0,-414,12,blue?'#a6d5ff':'#f4b5bc','700');
@@ -309,22 +310,33 @@ function drawDream(){const t=dreamTime(),blue=dreamBlue(),islands=dreamIslands()
  }
  if(t>=DREAM.memory&&t<DREAM.red1||t>=DREAM.blue2&&t<DREAM.stored+.7||t>=DREAM.islands1&&t<DREAM.red2||t>=DREAM.islands2&&t<DREAM.portal){
   if(t>=DREAM.memory&&t<DREAM.red1||guide&&t>=DREAM.blue2&&t<DREAM.stored){
-   drawDreamShape({type:'double',...dp(0,-14),vertical:dreamScenario.verticalNorth});
-   drawDreamShape({type:'double',...dp(0,14),vertical:!dreamScenario.verticalNorth});
-   drawDreamShape({type:'circle',...dp(0,0,10)});
+   drawDreamShape({type:'double',...dp(0,DREAM_CLONE_Z.north),vertical:dreamScenario.verticalNorth});
+   drawDreamShape({type:'double',...dp(0,DREAM_CLONE_Z.south),vertical:!dreamScenario.verticalNorth});
+   drawDreamShape({type:'circle',...dp(0,DREAM_CLONE_Z.kick,10)});
   }
   // Redraw the sources over their telegraphs; orientation must stay legible.
-  for(const y of [-14,0,14]){
+  for(const y of [DREAM_CLONE_Z.north,DREAM_CLONE_Z.kick,DREAM_CLONE_Z.south]){
    const p=dp(0,y);dragon(p.x,p.y,38);
    if(t<DREAM.red1||guide&&!islands){
-    if(y===0)circle(p.x,p.y,20,null,'#ffe995',3);
+    if(y===DREAM_CLONE_Z.kick)circle(p.x,p.y,20,null,'#ffe995',3);
     else{circle(p.x,p.y+34,19,'#191b22eb','#ffe995',2);text((y<0?dreamScenario.verticalNorth:!dreamScenario.verticalNorth)?'↕':'↔',p.x,p.y+34,28,'#fff1b8','700')}
    }
   }
  }
  if(t>=DREAM.links&&t<DREAM.blue2||step.startsWith('pair')){for(const s of dream.sources){dragon(s.x,s.y-18,31);if(t<DREAM.lock){icon(s.type,s.x,s.y+8,19);line(s,actor(s.owner),'#ffdb9c',2.5)}else if(guide)icon(s.type,s.x,s.y+8,17)}}
  if(islands&&t<DREAM.towers)for(const tower of dreamTowerPositions())if(t>=DREAM.tellTowers)drawDreamTower(tower);
- if(t>=DREAM.portal&&t<DREAM.red3){const f=Math.min(1,Math.max(0,(t-DREAM.jump)/1.1)),coneFrom=dp(0,dreamScenario.absorbedNorth?14:-14),coneTo=dp(dreamScenario.coneEast?14:-14,0),orbTo=dp(-coneTo.x/DS,0),p={x:coneFrom.x+(coneTo.x-coneFrom.x)*f,y:coneFrom.y+(coneTo.y-coneFrom.y)*f};circle(0,(dreamScenario.absorbedNorth?-14:14)*DS,36,'#060912','#b399ec',3);dragon(p.x,p.y,38);dragon(orbTo.x*f,0,38);if(guide||dreamTowerPractice?.stage==='finale'){text(dreamScenario.verticalNorth!==dreamScenario.absorbedNorth?'↕':'↔',p.x,p.y+38,25,'#ffe6bd');circle(orbTo.x*f,0,24,null,'#e0b7a7',2)}}
+ if(t>=DREAM.portal&&t<DREAM.red3){
+  const f=Math.min(1,Math.max(0,(t-DREAM.jump)/1.1));
+  const from=dreamScenario.absorbedNorth?DREAM_CLONE_Z.south:DREAM_CLONE_Z.north;
+  const islandX=dreamScenario.coneEast?14:-14;
+  const cone=dp(islandX*f,from*(1-f)),orb=dp(-islandX*f,DREAM_CLONE_Z.kick*(1-f));
+  circle(0,-from*DS,36,'#060912','#b399ec',3);
+  dragon(cone.x,cone.y,38);dragon(orb.x,orb.y,38);
+  if(guide||dreamTowerPractice?.stage==='finale'){
+   text(dreamScenario.verticalNorth!==dreamScenario.absorbedNorth?'↕':'↔',cone.x,cone.y+38,25,'#ffe6bd');
+   circle(orb.x,orb.y,24,null,'#e0b7a7',2);
+  }
+ }
  if(['safeIsland','returnRed'].includes(step)){dragon((dreamScenario.coneEast?14:-14)*DS,0,38);dragon((dreamScenario.coneEast?-14:14)*DS,0,38)}
  if(step==='finalCone')dragon(0,-7.5*DS,38);
  if(guide&&step==='safeIsland'&&t>=DREAM.blue4&&t<DREAM.safe){const c=dp(dreamScenario.coneEast?14:-14,0);drawDreamShape({type:'double',...c,vertical:dreamScenario.verticalNorth!==dreamScenario.absorbedNorth});drawDreamShape({type:'circle',...dp(-c.x/DS,0,10)})}
