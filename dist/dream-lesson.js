@@ -91,7 +91,7 @@ function updateDreamLessonAnimation(now){
 }
 // Match manual movement: constant arena units per second, independent of route length.
 function dreamLessonMove(start,end,seconds){
- const distance=dist(start,end),travel=distance?Math.min(1,Math.max(0,seconds)*PLAYER_MOVE_SPEED/distance):1;
+ const distance=dist(start,end),travel=distance?Math.min(1,Math.max(0,seconds)*DREAM_MOVE_SPEED/distance):1;
  return {x:start.x+(end.x-start.x)*travel,y:start.y+(end.y-start.y)*travel};
 }
 function dreamLessonFrame(){

@@ -103,8 +103,8 @@ function rep1FireEvent(key){const before=rep1.failures.length;let data={};
 function rep1Update(old,dt){
  old-=rep1Offset();
  const s=rep1Step();if(rep1.stage!==s.id){rep1.stage=s.id;rep1.readyFor=0;rep1.departed=partnerRhythm!=='first';rep1.lastPosition={...player}}
- if(!rep1.departed){const stopped=dist(player,rep1.lastPosition)<.5;rep1.readyFor=stopped&&dist(player,rep1Target(selectedRole))<28?rep1.readyFor+dt:0;rep1.lastPosition={...player};const travel=Math.max(...party.filter(p=>p.role!==selectedRole).map(p=>dist(p,rep1Target(p.role))/190));if(rep1.readyFor>=.7||rep1Time()>=s.deadline-travel-.3)rep1.departed=true}
- if(rep1.departed)for(const p of party)if(p.role!==selectedRole){const target=rep1Target(p.role);advanceToward(p,target,190*dt)}
+ if(!rep1.departed){const stopped=dist(player,rep1.lastPosition)<.5;rep1.readyFor=stopped&&dist(player,rep1Target(selectedRole))<28?rep1.readyFor+dt:0;rep1.lastPosition={...player};const travel=Math.max(...party.filter(p=>p.role!==selectedRole).map(p=>dist(p,rep1Target(p.role))/PLAYER_MOVE_SPEED));if(rep1.readyFor>=.7||rep1Time()>=s.deadline-travel-.3)rep1.departed=true}
+ if(rep1.departed)for(const p of party)if(p.role!==selectedRole){const target=rep1Target(p.role);advanceToward(p,target,PLAYER_MOVE_SPEED*dt)}
  // Snapshot proximity when the casts resolve, not when the exercise assigns a role.
  for(const key of ['fire1','kickTell','cones1','dark1','kick','fire2','cones2','dark2','sobatTell','sobat','turn','repeat','finishers'])if(old<REP1[key]&&rep1Time()>=REP1[key])rep1FireEvent(key);
 }

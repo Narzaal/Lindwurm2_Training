@@ -25,7 +25,7 @@ function playerReady(){
  const target=resolutionTarget(me());return dist(player,target)<(target.r??28)+16;
 }
 function latestPartnerDeparture(){
- const travel=party.filter(p=>p.role!==selectedRole).map(p=>{const target=resolution.locked?resolutionTarget(p):sources.find(s=>s.id===plannedSources[p.role])??pt(p.clock*TAU/8,355);return dist(p,target)/190});
+ const travel=party.filter(p=>p.role!==selectedRole).map(p=>{const target=resolution.locked?resolutionTarget(p):sources.find(s=>s.id===plannedSources[p.role])??pt(p.clock*TAU/8,355);return dist(p,target)/PLAYER_MOVE_SPEED});
  return Math.max(decisions.active.at,decisions.active.deadline-Math.max(0,...travel)-.25);
 }
 function updateAutomaticDecision(dt){

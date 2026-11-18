@@ -132,7 +132,7 @@ for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2'])for(const coneEast o
 }
 // Short and long routes share the actual manual speed and stop exactly at the destination.
 for(const length of [90,300,600]){
- const at=run(`dreamLessonMove({x:0,y:0},{x:${length},y:0},.25)`);assert(Math.abs(at.x-185*.25)<1e-8);
+ const at=run(`dreamLessonMove({x:0,y:0},{x:${length},y:0},.25)`);assert(Math.abs(at.x-run('DREAM_MOVE_SPEED')*.25)<1e-8);
  assert.equal(run(`dreamLessonMove({x:0,y:0},{x:${length},y:0},10).x`),length);tests++;
 }
 console.log('Passed '+tests+' checks: dream lessons, link practice, rendering and platform assignment.');

@@ -21,7 +21,7 @@ const run=code=>vm.runInContext(code,context);
 
 for(let pattern=0;pattern<8;pattern++)for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2']){
  run(`trainingExercise='dream';mode='dream';selectedRole='${role}';partnerRhythm='${pattern%2?'first':'live'}';reset(true);dreamScenario.cardinalDefam=${!!(pattern&1)};dreamScenario.cardinalFirst=${!!(pattern&2)};dreamScenario.verticalNorth=${!!(pattern&4)};dreamScenario.absorbedNorth=${!!(pattern&2)};dreamScenario.coneEast=${!!(pattern&1)};dreamReset();dreamEnter();running=true;started=true;history=[]`);
- run(`for(let i=1;i<=4200;i++){const old=time;advanceToward(player,dreamTarget(selectedRole),185*.05);time=i*.05;dreamUpdate(old,.05);}`);
+ run(`for(let i=1;i<=4200;i++){const old=time;advanceToward(player,dreamTarget(selectedRole),DREAM_MOVE_SPEED*.05);time=i*.05;dreamUpdate(old,.05);}`);
  const s=state();const failures=s.dream.failures;
  if(failures.length){console.error(JSON.stringify({pattern,role,failures:failures.slice(0,12)},null,2));process.exit(1)}
  assert.equal(s.dream.events.length,14);

@@ -18,7 +18,7 @@ for(const clock of [0,1,2,3,4,5,6,7])for(const first of ['stack','defam']){
  let previous=null;
  for(let i=0;i<540;i++){
   const frame=run(`dreamPairDemoFrame(dreamLinkLesson,${i*.05})`);
-  if(previous)for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2'])assert(Math.hypot(frame.positions[role].x-previous.positions[role].x,frame.positions[role].y-previous.positions[role].y)<=185*.05+1e-7);
+  if(previous)for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2'])assert(Math.hypot(frame.positions[role].x-previous.positions[role].x,frame.positions[role].y-previous.positions[role].y)<=run('DREAM_MOVE_SPEED')*.05+1e-7);
   previous=frame;
  }
  for(let wave=0;wave<4;wave++){

@@ -1,5 +1,8 @@
 'use strict';
-const PLAYER_MOVE_SPEED=185;
+const RUN_SPEED_YALMS=6;
+const PLAYER_MOVE_SPEED=RUN_SPEED_YALMS*REP1_SCALE;
+const DREAM_MOVE_SPEED=RUN_SPEED_YALMS*DS;
+function movementSpeed(){return isDreamActive()?DREAM_MOVE_SPEED:PLAYER_MOVE_SPEED}
 const $=id=>document.getElementById(id), canvas=$('arena'),ctx=canvas.getContext('2d');
 const STAGING=6;
 const trainingPhases=[
@@ -62,7 +65,7 @@ function updateActors(dt){
  for(const p of party){
   const pos=actor(p.role),clone=pt(p.clock*TAU/8,325);p.nearClone=dist(pos,clone)<=95;
   if(p.role===selectedRole||botsWaiting())continue;
-  const step=190*dt;
+  const step=PLAYER_MOVE_SPEED*dt;
   if(!linksActive||mode==='staging'){advanceToward(p,pt(p.clock*TAU/8,270),step);continue}
   if(phaseTime()>=(mode==='links'?24:COMBAT.lock)){
    if(mode==='placement'&&!bound(p.role)){if(!(hasMechanic(p.role,'cone')&&phaseTime()>=COMBAT.stack&&phaseTime()<COMBAT.kickMove))advanceToward(p,resolutionTarget(p),step)}
@@ -177,7 +180,7 @@ function tick(now){const dt=Math.min(.05,(now-lastFrame)/1000||0);lastFrame=now;
  const movementOrigin={x:player.x,y:player.y};demoMove(dt*speed);
  let dx=(keys.has('right')?1:0)-(keys.has('left')?1:0),dy=(keys.has('down')?1:0)-(keys.has('up')?1:0);
  if(dx||dy){const n=Math.hypot(dx,dy);dx/=n;dy/=n}else{dx=stick.x;dy=stick.y}
- if(!demoMode&&(dx||dy)&&!bound(selectedRole)){player.x+=dx*PLAYER_MOVE_SPEED*dt*speed;player.y+=dy*PLAYER_MOVE_SPEED*dt*speed;player.a=Math.atan2(-dx,-dy);const r=Math.hypot(player.x,player.y);const limit=isDreamActive()?(dreamIslands()?24*DS:22.5*DS):478;if(r>limit){player.x*=limit/r;player.y*=limit/r}}
+ if(!demoMode&&(dx||dy)&&!bound(selectedRole)){const step=movementSpeed()*dt*speed;player.x+=dx*step;player.y+=dy*step;player.a=Math.atan2(-dx,-dy);const r=Math.hypot(player.x,player.y);const limit=isDreamActive()?(dreamIslands()?24*DS:22.5*DS):478;if(r>limit){player.x*=limit/r;player.y*=limit/r}}
  checkDeathWall(movementOrigin);const old=time;const wasRep1=isRep1Active();const wasCandy=isCandyActive();time=Math.min(duration(),time+dt*speed);encounterUpdate(old,time);demoPrepare();if(wasRep1){rep1Update(old,dt*speed);if(['sequence','full','all'].includes(trainingExercise)&&time>=rep1Offset()+REP1.end){setupActors();decisions=freshDecisions();objectiveCache='';toast('Replication 2 · repère ton clone grâce à son lien cyan.')}if(history.length===0||time-history.at(-1).t>.06)record();if(time>=duration())finish();updateUI();render();requestAnimationFrame(tick);return}if(isDreamActive()){dreamUpdate(old,dt*speed);if(history.length===0||time-history.at(-1).t>.06)record();if(time>=duration())finish();updateUI();render();requestAnimationFrame(tick);return}if(wasCandy||isCandyActive()){candyUpdate(old,dt*speed);if(history.length===0||time-history.at(-1).t>.06)record();if(time>=duration())finish();updateUI();render();requestAnimationFrame(tick);return}const decision=firstRhythm()?decisionPoints().find(p=>!decisions.done.includes(p.id)&&old<p.at&&time>=p.at):null;
  if(old<rep2At()&&time>=rep2At()&&mode!=='staging'){linksActive=true;for(const s of sources)s.owner=s.initialOwner;toast('Les liens apparaissent. Récupère le tien automatiquement, puis reste sous sa source.')}
  if(mode==='placement'&&old<rep2At(COMBAT.lock)&&time>=rep2At(COMBAT.lock))lockAssignments();

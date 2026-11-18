@@ -56,8 +56,8 @@ function encounterUpdate(old,now){
 }
 function encounterTick(dt){
  const old=time,movementOrigin={x:player.x,y:player.y};demoMove(dt);
- if(!demoMode){let dx=(keys.has('right')?1:0)-(keys.has('left')?1:0),dy=(keys.has('down')?1:0)-(keys.has('up')?1:0);if(!dx&&!dy){dx=stick.x;dy=stick.y}const n=Math.max(1,Math.hypot(dx,dy));player.x+=dx/n*185*dt;player.y+=dy/n*185*dt;checkDeathWall(movementOrigin)}
- for(const p of party)if(p.role!==selectedRole)advanceToward(p,encounterTarget(p.role),190*dt);
+ if(!demoMode){let dx=(keys.has('right')?1:0)-(keys.has('left')?1:0),dy=(keys.has('down')?1:0)-(keys.has('up')?1:0);if(!dx&&!dy){dx=stick.x;dy=stick.y}const n=Math.max(1,Math.hypot(dx,dy));player.x+=dx/n*PLAYER_MOVE_SPEED*dt;player.y+=dy/n*PLAYER_MOVE_SPEED*dt;checkDeathWall(movementOrigin)}
+ for(const p of party)if(p.role!==selectedRole)advanceToward(p,encounterTarget(p.role),PLAYER_MOVE_SPEED*dt);
  time=Math.min(duration(),time+dt);encounterUpdate(old,time);
  if(old<99.1&&time>=99.1){setupActors();decisions=freshDecisions()}
  if(history.length===0||time-history.at(-1).t>.06)record();if(time>=duration())finish();updateUI();
@@ -117,7 +117,7 @@ function demoMove(dt){
  else if(staging())target=pt(me().clock*TAU/8,270);
  else if(!resolution.locked)target=sources.find(s=>s.id===plannedSources[selectedRole])??pt(me().clock*TAU/8,355);
  else target=resolutionTarget(me());
- if(target&&!bound(selectedRole)){const a=facingToward(player,target);if(dist(player,target)>1)player.a=a;advanceToward(player,target,185*dt)}
+ if(target&&!bound(selectedRole)){const a=facingToward(player,target);if(dist(player,target)>1)player.a=a;advanceToward(player,target,movementSpeed()*dt)}
 }
 function demoPrepare(){
  if(!demoMode)return;

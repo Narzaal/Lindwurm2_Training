@@ -6,6 +6,8 @@ Simulateur d’entraînement aux mécaniques de The Lindwurm (M12S phase 2).
 
 Accessible directement dans le navigateur, sans installation.
 
+Le joueur et les bots se déplacent à 6 yalms/s à vitesse ×1. En Replication II, le groupe gauche se décale au nord-ouest après les rayons rejoués, puis descend vers la tour D après le cône.
+
 Sources importées depuis [Pull Lab sur Sites](https://clone-zone-m12s.narzaal.chatgpt.site), commit source `e6e44baecc4b66e16875768ae206c5053c13ce90`.
 
 ## Structure

@@ -3,7 +3,7 @@ const {create,html}=require('./trainer-harness.cjs');
 const {run,el,canvasText}=create();el('confirmPreparation').onclick();let tests=0;
 assert(!html.includes('dreamWorkshopBar'));
 function advance(){run(`lastFrame=0;for(let i=1;running&&i<600;i++){
- const jump=dream.jumps[selectedRole];if(!(jump&&time<jump.end))advanceToward(player,dreamTarget(selectedRole),PLAYER_MOVE_SPEED*.05);
+ const jump=dream.jumps[selectedRole];if(!(jump&&time<jump.end))advanceToward(player,dreamTarget(selectedRole),DREAM_MOVE_SPEED*.05);
  tick(i*50);
 }`);}
 for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2'])for(const type of ['fire','earth','dark','wind'])for(const rhythm of ['first','live']){

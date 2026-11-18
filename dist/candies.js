@@ -145,8 +145,8 @@ function candyUpdate(old,dt){
  if(!candy.entered)candyEnter();const t=candyTime(),s=candyStep();
  const desired=candyDesiredAggro();if(t>=CANDY.assign&&desired!==selectedRole)candy.aggro=desired;
  if(s.id!==candy.stage){candy.stage=s.id;candy.readyFor=0;candy.departed=partnerRhythm!=='first';candy.lastPosition={...player}}
- if(!candy.departed){const target=candyTarget(selectedRole),still=dist(player,candy.lastPosition)<.5;candy.readyFor=still&&dist(player,target)<32?candy.readyFor+dt:0;candy.lastPosition={...player};const travel=Math.max(...party.filter(p=>p.role!==selectedRole).map(p=>dist(p,candyTarget(p.role))/190));if(candy.readyFor>=.7||time>=s.deadline-travel-1)candy.departed=true}
- if(candy.departed)for(const p of party)if(p.role!==selectedRole)advanceToward(p,candyTarget(p.role),190*dt);
+ if(!candy.departed){const target=candyTarget(selectedRole),still=dist(player,candy.lastPosition)<.5;candy.readyFor=still&&dist(player,target)<32?candy.readyFor+dt:0;candy.lastPosition={...player};const travel=Math.max(...party.filter(p=>p.role!==selectedRole).map(p=>dist(p,candyTarget(p.role))/PLAYER_MOVE_SPEED));if(candy.readyFor>=.7||time>=s.deadline-travel-1)candy.departed=true}
+ if(candy.departed)for(const p of party)if(p.role!==selectedRole)advanceToward(p,candyTarget(p.role),PLAYER_MOVE_SPEED*dt);
  candyAdvanceObjects(dt);
  for(const key of ['assign','swap','invert','wakeTell','wave1','wave2','nether','expire','raid','sobatTell','sobat','turn','repeat','finishers'])if(old<candyOffset()+CANDY[key]&&time>=candyOffset()+CANDY[key])candyFireEvent(key);
  if(t>=candy.nextAuto&&t<CANDY.expire){const before=candy.failures.length;candyDamage([candy.aggro],'auto-attaque du boss');if(candy.failures.length>before)candyResult('auto','Agro',before);candy.nextAuto+=3}

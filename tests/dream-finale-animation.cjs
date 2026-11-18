@@ -14,7 +14,7 @@ for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2'])for(const first of [
 // Group members start 0.25 s after the player, at normal speed; final dodge has the same stagger.
 for(const step of [2,3,4]){
  run(`setDreamLessonStep(${step});dreamLinkLesson.elapsed=1.3;drawnActors=[];drawDreamFinaleLesson()`);
- assert(run(`drawnActors.every(p=>{const route=dreamFinaleRoute(dreamLinkLesson,p.role,${step}),travel=Math.min(dist(route.start,route.end),(p.role===selectedRole?.3:.05)*PLAYER_MOVE_SPEED);return Math.abs(dist(p,route.start)-travel)<.00001;})`));tests++;
+ assert(run(`drawnActors.every(p=>{const route=dreamFinaleRoute(dreamLinkLesson,p.role,${step}),travel=Math.min(dist(route.start,route.end),(p.role===selectedRole?.3:.05)*DREAM_MOVE_SPEED);return Math.abs(dist(p,route.start)-travel)<.00001;})`));tests++;
 }
 run('drawDreamArenaFloor=savedFloor;drawDreamPlatforms=savedPlatforms;playerDot=savedDot');
 console.log('Passed '+tests+' finale animation checks.');

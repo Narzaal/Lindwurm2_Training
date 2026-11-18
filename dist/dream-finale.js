@@ -41,7 +41,7 @@ function dreamFinaleRoute(c,role,step){
 }
 function dreamFinaleGroupStart(c,role){return role===c.role?1:1.25;}
 function dreamFinaleSplitAt(c){
- return Math.max(...roles.map(role=>{const route=dreamFinaleRoute(c,role,3);return dreamFinaleGroupStart(c,role)+dist(route.start,route.end)/PLAYER_MOVE_SPEED;}))+.35;
+ return Math.max(...roles.map(role=>{const route=dreamFinaleRoute(c,role,3);return dreamFinaleGroupStart(c,role)+dist(route.start,route.end)/DREAM_MOVE_SPEED;}))+.35;
 }
 function drawDreamFinaleLesson(){
  const c=dreamLinkLesson,s=c.step,t=c.elapsed%16,vertical=c.scenario.verticalNorth!==c.scenario.absorbedNorth;

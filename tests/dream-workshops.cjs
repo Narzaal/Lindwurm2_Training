@@ -20,7 +20,7 @@ for(const role of ['MT','OT','H1','H2','M1','M2','R1','R2'])for(const first of [
  run(`selectedRole='${role}';partnerRhythm='first';dreamWorkshopConfig={kind:'finale',first:'${first?'cardinal':'intercardinal'}',absorbed:'${absorbed?'north':'south'}',island:'${east?'east':'west'}',axis:'${vertical?'vertical':'horizontal'}'};startDreamTowerPractice(true,'finale')`);
  assert(el('workshopBriefDialog').open);assert(!run('running'));assert(el('workshopBriefCopy').textContent.includes(first?'cardinaux':'intercardinaux'));
  el('startWorkshopBrief').onclick();
- run(`for(let i=0;i<1200&&!dreamTowerPractice.done;i++){advanceToward(player,dreamTarget(selectedRole),PLAYER_MOVE_SPEED*.05);var old=time;time+=.05;dreamUpdate(old,.05);}updateUI()`);
+ run(`for(let i=0;i<1200&&!dreamTowerPractice.done;i++){advanceToward(player,dreamTarget(selectedRole),DREAM_MOVE_SPEED*.05);var old=time;time+=.05;dreamUpdate(old,.05);}updateUI()`);
  assert(run('dreamTowerPractice.done'));assert(run('dreamTowerPractice.passed'),role+' '+first+' '+absorbed+' '+east+' '+vertical+' '+run('JSON.stringify(dream.failures.filter(f=>f.roles.includes(selectedRole)))'));
  assert(el('dreamTowerResultDialog').open);assert(!el('nextDreamElements').hidden===false);assert(run('dreamTime()>=DREAM.storedFinal&&dreamTime()<DREAM.storedFinal+.1'));
  assert(run('dream.events.some(e=>e.key==="replay1")&&dream.events.some(e=>e.key==="safe")&&dream.events.some(e=>e.key==="replay2")'));
